@@ -10,9 +10,9 @@ const { loadData } = require("./util/import-mongo/index");
 const app = express();
 const port = process.env.PORT || 3060;  // Use the port from environment variables if available
 
-// CORS Configuration - allow requests from the frontend URL
+// CORS Configuration - allow requests from any origin
 app.use(cors({
-  origin: 'https://fullstack-capstone-project-frontend.vercel.app', // Your frontend domain
+  origin: '*', // Allow requests from any origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Limit methods to what your app needs
   credentials: true // Allow credentials if needed (cookies, etc.)
 }));
