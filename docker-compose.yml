@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    build: ./giflink-backend
+    build: ./giftlink-backend
     ports:
       - "3000:3000"
     environment:
@@ -13,7 +13,7 @@ services:
       - frontend
 
   frontend:
-    build: ./giflink-frontend
+    build: ./giftlink-frontend
     ports:
       - "80:80"
     environment:
