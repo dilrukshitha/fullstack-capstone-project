@@ -1,23 +1,25 @@
-# Use an official Node.js runtime as the base image
-FROM node:14
+# Base image for building the React app
+FROM node:14 as build
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
+# Set the working directory
+WORKDIR /app
 
-# Copy the package.json and package-lock.json
-COPY package*.json ./
-
-# Install dependencies
+# Copy the package.json and install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the rest of your app's source code
+# Copy the entire frontend code
 COPY . .
 
-# Build the app for production
+# Build the frontend for production
 RUN npm run build
 
-# Expose port 80 to serve the frontend
+# Serve the frontend using nginx
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose the port nginx will run on
 EXPOSE 80
 
-# Start the app
-CMD ["npx", "serve", "-s", "build"]
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
